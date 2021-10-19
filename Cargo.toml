@@ -1,0 +1,27 @@
+[package]
+name = "tcp_proxy"
+version = "0.1.0"
+edition = "2018"
+
+[[bin]]
+name = "tcp_proxy_glommio"
+path = "src/tcp_proxy_glommio.rs"
+
+[[bin]]
+name = "tcp_proxy_tokio"
+path = "src/tcp_proxy_tokio.rs"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[dependencies]
+glommio = { path = "../glommio/glommio" }
+tokio = { version = "1.0", features = [ "full" ] }
+hdrhistogram = "7.3.0"
+clap = "2.33"
+futures = "0.3.17"
+futures-lite = "1.11.1"
+log = "0.4.14"
+pretty_env_logger = "0.4.0"
+cpu-time = "1.0.0"
