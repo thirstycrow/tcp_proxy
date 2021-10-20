@@ -18,11 +18,16 @@ fn main() {
 
             THREAD_TIME.with(|_| {});
 
-            for i in 1..=40000 {
+            for i in 1..=10000 {
                 glommio::timer::sleep(Duration::from_millis(1)).await;
                 if i % 1000 == 0 {
-                    let elapsed = THREAD_TIME.with(|x| x.elapsed());
-                    println!("repeated: {}, thread time used {:?}", i, elapsed);
+                    let elapsed = THREAD_TIME.with(|t| t.elapsed());
+                    println!(
+                        "repeated: {}, thread time used {:?}, avg: {:?}",
+                        i,
+                        elapsed,
+                        elapsed / i
+                    );
                 }
             }
 
@@ -44,13 +49,15 @@ fn main() {
 
         THREAD_TIME.with(|_| {});
 
-        for i in 1..=40000 {
+        for i in 1..=10000 {
             tokio::time::sleep(Duration::from_millis(1)).await;
             if i % 1000 == 0 {
+                let elapsed = THREAD_TIME.with(|t| t.elapsed());
                 println!(
-                    "repeated: {}, thread time used {:?}",
+                    "repeated: {}, thread time used {:?}, avg: {:?}",
                     i,
-                    THREAD_TIME.with(|t| t.elapsed())
+                    elapsed,
+                    elapsed / i
                 );
             }
         }
